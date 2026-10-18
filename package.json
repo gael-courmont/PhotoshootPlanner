@@ -1,0 +1,42 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build-legs": "tsx scripts/build-legs.ts"
+  },
+  "dependencies": {
+    "maplibre-gl": "^6.14.0",
+    "next": "16.4.2",
+    "next-intl": "^4.14.9",
+    "nuqs": "^2.10.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-map-gl": "^8.1.3",
+    "zod": "^4.6.7",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  },
+  "packageManager": "pnpm@12.14.0",
+  "engines": {
+    "node": ">=24"
+  }
+}
