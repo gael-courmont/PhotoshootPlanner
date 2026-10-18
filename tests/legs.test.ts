@@ -47,4 +47,27 @@ describe("buildLegs", () => {
 
     for (const leg of legs) expect(() => legSchema.parse(leg)).not.toThrow();
   });
+
+  describe("overrides", () => {
+    it("replaces only the walking time of the directed pair", async () => {
+      const base = await buildLegs({ spots, overrides: {}, fetchRoute: replayFixture });
+      const legs = await buildLegs({
+        spots,
+        overrides: { "a>b": { walkMinutes: 30 } },
+        fetchRoute: replayFixture,
+      });
+
+      const find = (ls: typeof legs, k: string) => ls.find((l) => `${l.from}>${l.to}` === k)!;
+      expect(find(legs, "a>b").walkMinutes).toBe(30);
+      expect(find(legs, "b>a").walkMinutes).toBe(16);
+      expect(find(legs, "a>b").meters).toBe(find(base, "a>b").meters);
+      expect(find(legs, "a>b").geometry).toEqual(find(base, "a>b").geometry);
+    });
+
+    it("fails naming the key when a spot id is unknown", async () => {
+      await expect(
+        buildLegs({ spots, overrides: { "a>nowhere": { walkMinutes: 5 } }, fetchRoute: replayFixture }),
+      ).rejects.toThrow("a>nowhere");
+    });
+  });
 });

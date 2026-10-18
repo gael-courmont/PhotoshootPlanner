@@ -153,10 +153,17 @@ scripts/
 Spots are fixed, so walking times are computed once at build time, never in the client. The cost is zero at runtime, and it works offline.
 
 1. `scripts/build-legs.ts` reads `spots.json`.
-2. For every ordered pair of spots, it calls the OpenRouteService `foot-walking` directions API (free tier). With 15 spots, that's 210 calls, well within limits.
-3. It writes `legs.json` with minutes, meters, and simplified route geometry (Douglas-Peucker, about 5 m tolerance, to keep the file small).
-4. It runs manually whenever spots change, or as a prebuild step that is skipped when `spots.json` is unchanged (via a hash check).
+2. For every ordered pair of spots (both directions, so overrides can differ per direction), it calls the OpenRouteService `foot-walking` directions API (free tier). With 15 spots, that's 210 calls, well within limits.
+3. It writes `legs.json` with minutes, meters, and simplified route geometry (`@turf/simplify`, Douglas-Peucker, about 5 m tolerance, coordinates rounded to 5 decimals, to keep the file small).
+4. It runs manually with `pnpm build-legs`. A hash of `spots.json` is stored alongside the output, and the script skips the API calls when the hash is unchanged. `--force` ignores the hash and recomputes everything. It is not a `next build` step in v1, so deploys never depend on a third-party API.
 5. The photographer can override a leg's minutes by hand in `legs.overrides.json`. This covers real-world quirks such as stairs at Trocadéro, crowds, or a closed bridge.
+
+Decisions:
+
+- **Walking minutes:** the ORS duration, rounded up to whole minutes (`Math.ceil(seconds / 60)`), with no pace factor. Pace corrections are done through overrides after walking the route once.
+- **Overrides:** keyed by directed pair, `{ "trocadero>bir-hakeim": { "walkMinutes": 14 } }`. Only `walkMinutes` can be overridden; geometry and meters always come from ORS. An override that names an unknown spot id makes the script fail.
+- **Failure behaviour:** everything is computed in memory and `legs.json` is written only after all pairs succeed, so a half-written file can never be committed. Retry on 429 and 5xx up to 3 times with backoff. Any other failure exits non-zero and names the pair.
+- **Testability:** the pure logic (pair list, converting and rounding an ORS response into a `Leg`, merging overrides, hash check, `legSchema` validation) lives in `lib/legs.ts` and is tested with Vitest on a recorded ORS fixture. The thin HTTP part is verified by running the script once.
 
 ## Non-functional
 
@@ -194,10 +201,18 @@ Each milestone ends with something deployed and testable on a phone. Tick tasks 
 
 ### M1 — Data & map foundation
 
-- [ ] Create the Next.js app (App Router, TypeScript, Tailwind), connect the repo to Vercel, and deploy from day one.
-- [ ] Write types and Zod schemas for Spot, Package and Leg. Create `spots.json` with 3 real spots and `packages.json` with 60, 120 and 180 minutes.
-- [ ] Write the `build-legs` script: OpenRouteService key in `.env`, every spot pair, simplified geometry, overrides merged, output to `legs.json`.
-- [ ] Create a MapTiler account and key. Build the map component with `react-map-gl/maplibre`, loaded client-only.
+**Status (Oct 18, 2026):** scaffold, content and schemas are in place (PR #1). `build-legs` is a stub that throws, and the map component is not started. Both API keys are in `.env`. Not yet confirmed: the Vercel deploy and the MapTiler account and style.
+
+- [x] Create the Next.js app (App Router, TypeScript, Tailwind), with next-intl, nuqs, Zustand, MapLibre and Vitest installed and the folder layout in place.
+- [ ] Connect the repo to Vercel and deploy from day one.
+- [x] Write types and Zod schemas for Spot, Package and Leg, with a content validation test.
+- [x] Create `spots.json` with 3 spots (placeholder photos, to be replaced with real ones) and `packages.json` with 60, 120 and 180 minutes.
+- [ ] Write the `build-legs` script (stub exists; ORS key is in `.env`):
+  - [ ] Pure logic in `lib/legs.ts` with Vitest tests on a recorded ORS fixture.
+  - [ ] ORS calls for every ordered pair, with retry, simplified geometry, overrides merged, output to `legs.json` only if all pairs succeed.
+  - [ ] Hash skip on `spots.json` and a `--force` flag.
+- [x] MapTiler key is in `.env`.
+- [ ] Confirm the MapTiler account. Build the map component with `react-map-gl/maplibre`, loaded client-only.
 - [ ] Show plain circle markers, center the camera on the Eiffel Tower area, pitch it to about 50°, and add the 3D buildings layer.
 
 **Done when:** the deployed URL shows the tilted map with 3 spots, and `legs.json` contains every pair.

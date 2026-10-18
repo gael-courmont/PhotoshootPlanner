@@ -44,11 +44,21 @@ export async function buildLegs(input: {
   overrides: Record<string, { walkMinutes: number }>;
   fetchRoute: FetchRoute;
 }): Promise<Leg[]> {
+  const ids = new Set(input.spots.map((s) => s.id));
+  for (const key of Object.keys(input.overrides)) {
+    const [from, to] = key.split(">");
+    if (!ids.has(from) || !ids.has(to)) {
+      throw new Error(`Override "${key}" names an unknown spot id`);
+    }
+  }
+
   const legs: Leg[] = [];
   for (const from of input.spots) {
     for (const to of input.spots) {
       if (from.id === to.id) continue;
-      legs.push(toLeg(from, to, await input.fetchRoute(from, to)));
+      const leg = toLeg(from, to, await input.fetchRoute(from, to));
+      const override = input.overrides[`${from.id}>${to.id}`];
+      legs.push(override ? { ...leg, walkMinutes: override.walkMinutes } : leg);
     }
   }
   return legs;

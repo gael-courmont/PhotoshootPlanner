@@ -47,3 +47,11 @@ _Avoid_: quota
 **Hand-off**:
 Passing the client's selection to the existing booking app, via a copyable summary. Booking itself is out of scope.
 _Avoid_: checkout, booking
+
+**Walking time**:
+The minutes needed to walk a leg: the routing service's estimate rounded up to whole minutes, unless the photographer has overridden it.
+_Avoid_: travel time, transit time
+
+**Override**:
+The photographer's manual correction of a leg's walking time, for real-world quirks such as stairs, crowds or a closed bridge.
+_Avoid_: patch, adjustment
