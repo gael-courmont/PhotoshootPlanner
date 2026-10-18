@@ -1,0 +1,137 @@
+[
+  {
+    "id": "trocadero",
+    "name": {
+      "en": "Trocadéro",
+      "fr": "Trocadéro"
+    },
+    "description": {
+      "en": "The classic Eiffel Tower view from the Trocadéro esplanade.",
+      "fr": "La vue classique sur la tour Eiffel depuis l'esplanade du Trocadéro."
+    },
+    "coords": [
+      2.2876,
+      48.8616
+    ],
+    "shootMinutes": 20,
+    "photos": [
+      {
+        "src": "/spots/placeholder-1.svg",
+        "alt": {
+          "en": "Trocadéro placeholder 1",
+          "fr": "Trocadéro image provisoire 1"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-2.svg",
+        "alt": {
+          "en": "Trocadéro placeholder 2",
+          "fr": "Trocadéro image provisoire 2"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-3.svg",
+        "alt": {
+          "en": "Trocadéro placeholder 3",
+          "fr": "Trocadéro image provisoire 3"
+        },
+        "w": 1200,
+        "h": 800
+      }
+    ]
+  },
+  {
+    "id": "bir-hakeim",
+    "name": {
+      "en": "Bir-Hakeim Bridge",
+      "fr": "Pont de Bir-Hakeim"
+    },
+    "description": {
+      "en": "Iconic metro bridge with the tower framing the background.",
+      "fr": "Pont emblématique du métro avec la tour en toile de fond."
+    },
+    "coords": [
+      2.2893,
+      48.8553
+    ],
+    "shootMinutes": 20,
+    "photos": [
+      {
+        "src": "/spots/placeholder-1.svg",
+        "alt": {
+          "en": "Bir-Hakeim Bridge placeholder 1",
+          "fr": "Bir-Hakeim Bridge image provisoire 1"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-2.svg",
+        "alt": {
+          "en": "Bir-Hakeim Bridge placeholder 2",
+          "fr": "Bir-Hakeim Bridge image provisoire 2"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-3.svg",
+        "alt": {
+          "en": "Bir-Hakeim Bridge placeholder 3",
+          "fr": "Bir-Hakeim Bridge image provisoire 3"
+        },
+        "w": 1200,
+        "h": 800
+      }
+    ]
+  },
+  {
+    "id": "champ-de-mars",
+    "name": {
+      "en": "Champ de Mars",
+      "fr": "Champ de Mars"
+    },
+    "description": {
+      "en": "Open lawns right at the foot of the tower.",
+      "fr": "Grandes pelouses au pied de la tour."
+    },
+    "coords": [
+      2.2986,
+      48.8556
+    ],
+    "shootMinutes": 25,
+    "photos": [
+      {
+        "src": "/spots/placeholder-1.svg",
+        "alt": {
+          "en": "Champ de Mars placeholder 1",
+          "fr": "Champ de Mars image provisoire 1"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-2.svg",
+        "alt": {
+          "en": "Champ de Mars placeholder 2",
+          "fr": "Champ de Mars image provisoire 2"
+        },
+        "w": 1200,
+        "h": 800
+      },
+      {
+        "src": "/spots/placeholder-3.svg",
+        "alt": {
+          "en": "Champ de Mars placeholder 3",
+          "fr": "Champ de Mars image provisoire 3"
+        },
+        "w": 1200,
+        "h": 800
+      }
+    ]
+  }
+]
