@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildLegs } from "@/lib/legs";
+import { buildLegs, RoutingHttpError } from "@/lib/legs";
 import { legSchema, type Spot } from "@/lib/schemas";
 import orsFixture from "./fixtures/ors-foot-walking.json";
 
@@ -68,6 +68,60 @@ describe("buildLegs", () => {
       await expect(
         buildLegs({ spots, overrides: { "a>nowhere": { walkMinutes: 5 } }, fetchRoute: replayFixture }),
       ).rejects.toThrow("a>nowhere");
+    });
+  });
+
+  describe("routing errors", () => {
+    const noWait = async () => {};
+
+    it("retries a 429 and succeeds on a later attempt", async () => {
+      let calls = 0;
+      const flaky = async () => {
+        if (++calls === 1) throw new RoutingHttpError(429);
+        return orsFixture;
+      };
+      const legs = await buildLegs({ spots, overrides: {}, fetchRoute: flaky, sleep: noWait });
+
+      expect(legs).toHaveLength(6);
+    });
+
+    it("retries a 5xx up to 3 times then fails naming the pair", async () => {
+      let calls = 0;
+      const down = async () => {
+        calls++;
+        throw new RoutingHttpError(503);
+      };
+      await expect(
+        buildLegs({ spots, overrides: {}, fetchRoute: down, sleep: noWait }),
+      ).rejects.toThrow(/a.*b/);
+      expect(calls).toBe(4); // first try + 3 retries
+    });
+
+    it("fails immediately on a non-retryable error, naming the pair", async () => {
+      let calls = 0;
+      const unroutable = async () => {
+        calls++;
+        throw new RoutingHttpError(404);
+      };
+      await expect(
+        buildLegs({ spots, overrides: {}, fetchRoute: unroutable, sleep: noWait }),
+      ).rejects.toThrow(/a.*b/);
+      expect(calls).toBe(1);
+    });
+
+    it("returns no legs when a later pair fails", async () => {
+      const failsOnC = async (_from: Spot, to: Spot) => {
+        if (to.id === "c") throw new RoutingHttpError(404);
+        return orsFixture;
+      };
+      const result = await buildLegs({
+        spots,
+        overrides: {},
+        fetchRoute: failsOnC,
+        sleep: noWait,
+      }).catch(() => "rejected");
+
+      expect(result).toBe("rejected");
     });
   });
 });
