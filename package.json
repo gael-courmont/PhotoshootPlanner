@@ -12,6 +12,7 @@
     "build-legs": "tsx scripts/build-legs.ts"
   },
   "dependencies": {
+    "@turf/simplify": "^7.4.0",
     "maplibre-gl": "^6.14.0",
     "next": "16.4.2",
     "next-intl": "^4.14.9",
