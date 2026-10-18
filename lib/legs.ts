@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import simplify from "@turf/simplify";
 import { z } from "zod";
 import { legSchema, type Leg, type Spot } from "./schemas";
@@ -92,3 +93,9 @@ export async function buildLegs(input: {
   }
   return legs;
 }
+
+export const hashSpots = (spots: Spot[]) =>
+  createHash("sha256").update(JSON.stringify(spots)).digest("hex");
+
+export const shouldRebuild = (input: { spots: Spot[]; storedHash: string | null; force: boolean }) =>
+  input.force || input.storedHash !== hashSpots(input.spots);
