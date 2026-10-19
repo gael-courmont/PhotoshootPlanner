@@ -27,6 +27,20 @@
       "total": "Total {duration}"
     },
     "reset": "Réinitialiser",
-    "resetConfirm": "Touchez à nouveau pour réinitialiser"
+    "resetConfirm": "Touchez à nouveau pour réinitialiser",
+    "back": "Retour à la liste",
+    "detailDescription": "Détails et photos du spot.",
+    "closeDetail": "Fermer le détail du spot"
+  },
+  "Spot": {
+    "shootingTime": "Durée du shooting : {duration}",
+    "pickPackageFirst": "Choisissez d'abord une formule",
+    "doesntFit": "Ne rentre pas dans votre budget de {duration}",
+    "action": {
+      "start": "Commencer ici",
+      "makeStart": "En faire le départ",
+      "add": "Ajouter",
+      "remove": "Retirer"
+    }
   }
 }

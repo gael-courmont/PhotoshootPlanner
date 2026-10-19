@@ -5,6 +5,7 @@ import { setWorkerUrl, type MapLibreEvent } from "maplibre-gl";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef } from "react";
 import { Layer, Map, Marker, Source, type MapRef } from "react-map-gl/maplibre";
+import { useOpenSpot } from "@/components/sheet/OpenSpot";
 import { useMediaQuery } from "@/components/sheet/useMediaQuery";
 import { useCustomizer } from "@/components/selection/useCustomizer";
 import {
@@ -24,7 +25,7 @@ setWorkerUrl(
   new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).href,
 );
 
-export type SpotMarker = { id: string; coords: [number, number] };
+export type SpotMarker = { id: string; name: string; coords: [number, number] };
 
 // Adds extruded buildings below the first label layer, reading the building
 // source-layer of whatever stock style is loaded.
@@ -43,6 +44,7 @@ export function SpotMap({ spots }: { spots: SpotMarker[] }) {
   const t = useTranslations("Home");
   const { selection, route, nonFittingSpotIds } = useCustomizer();
   const routeData = useMemo(() => routeGeoJson(route, legs), [route]);
+  const { open } = useOpenSpot();
   const mapRef = useRef<MapRef>(null);
   const isSidebar = useMediaQuery(SIDEBAR_QUERY);
   // Keeps the camera centred on the part of the map the sheet or sidebar leaves visible.
@@ -79,7 +81,7 @@ export function SpotMap({ spots }: { spots: SpotMarker[] }) {
       </Source>
       {spots.map((spot) => (
         <Marker key={spot.id} longitude={spot.coords[0]} latitude={spot.coords[1]}>
-          <button type="button" aria-label={spot.id} className="flex flex-col items-center">
+          <button type="button" aria-label={spot.name} onClick={() => open(spot.id)} className="flex flex-col items-center">
             {spot.id === selection.startSpotId && <span aria-label="Start">🚩</span>}
             <span
               className={`size-4 rounded-full border-2 border-white shadow ${nonFittingSpotIds.includes(spot.id) ? "bg-gray-400" : "bg-rose-600"}`}

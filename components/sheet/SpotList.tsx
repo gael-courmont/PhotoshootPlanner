@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useMemo } from "react";
+import { useOpenSpot } from "./OpenSpot";
 import { useCustomizer } from "@/components/selection/useCustomizer";
 import { legs, packages, spots } from "@/lib/content";
 import { formatDuration } from "@/lib/route";
@@ -23,9 +24,15 @@ function Row({ row }: { row: SpotRow }) {
   const locale = useLocale() as "en" | "fr";
   const spot = spotById.get(row.spotId)!;
   const photo = spot.photos[0];
+  const { open } = useOpenSpot();
 
   return (
-    <li className={`flex min-h-14 items-center gap-3 px-4 py-1 ${row.fits ? "" : "opacity-50"}`}>
+    <li>
+      <button
+        type="button"
+        onClick={() => open(row.spotId)}
+        className={`flex min-h-14 w-full items-center gap-3 px-4 py-1 text-left ${row.fits ? "" : "opacity-50"}`}
+      >
       {photo && (
         <Image
           src={photo.src}
@@ -40,6 +47,7 @@ function Row({ row }: { row: SpotRow }) {
         <p className="text-sm text-gray-600">{formatDuration(row.shootMinutes)}</p>
       </div>
       {row.badge && <Badge badge={row.badge} />}
+      </button>
     </li>
   );
 }

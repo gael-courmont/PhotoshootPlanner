@@ -27,6 +27,20 @@
       "total": "Total {duration}"
     },
     "reset": "Reset",
-    "resetConfirm": "Tap again to reset"
+    "resetConfirm": "Tap again to reset",
+    "back": "Back to the list",
+    "detailDescription": "Details and photos of the spot.",
+    "closeDetail": "Close the spot details"
+  },
+  "Spot": {
+    "shootingTime": "Shooting time: {duration}",
+    "pickPackageFirst": "Pick a package first",
+    "doesntFit": "Doesn't fit your {duration} budget",
+    "action": {
+      "start": "Start here",
+      "makeStart": "Make this the start",
+      "add": "Add",
+      "remove": "Remove"
+    }
   }
 }
