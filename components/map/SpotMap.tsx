@@ -1,7 +1,7 @@
 "use client";
 
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { MapLibreEvent } from "maplibre-gl";
+import { setWorkerUrl, type MapLibreEvent } from "maplibre-gl";
 import { useTranslations } from "next-intl";
 import { Map, Marker } from "react-map-gl/maplibre";
 import {
@@ -9,6 +9,12 @@ import {
   INITIAL_VIEW,
   mapStyleUrl,
 } from "@/lib/map-config";
+
+// Turbopack rewrites import.meta.url, so MapLibre cannot derive its worker URL
+// itself; point it at the worker file emitted as a static asset.
+setWorkerUrl(
+  new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).href,
+);
 
 export type SpotMarker = { id: string; coords: [number, number] };
 
