@@ -61,13 +61,13 @@ export function Sheet() {
             <Drawer.Description className="sr-only">{t("description")}</Drawer.Description>
             <Drawer.Handle aria-label={t("handle")} className="!my-0 !h-11 !w-full !bg-transparent after:!top-4 after:!h-1.5 after:!w-12 after:!rounded-full after:!bg-gray-300" />
             <SheetPeek />
-            <div className="min-h-0 flex-1 overflow-y-auto">
+            <div className="min-h-0 flex-1 overflow-y-auto pb-[50dvh]">
               <SpotList />
             </div>
           </Drawer.Content>
         </Drawer.Portal>
       </Drawer.Root>
-      <Drawer.Root open={!!openSpotId} onOpenChange={(open) => !open && close()}>
+      <Drawer.Root open={!!openSpotId} handleOnly onOpenChange={(open) => !open && close()}>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
           <Drawer.Content className="fixed inset-x-0 bottom-0 flex max-h-[92%] flex-col rounded-t-2xl bg-white outline-none">

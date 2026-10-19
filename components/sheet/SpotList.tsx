@@ -70,7 +70,7 @@ export function SpotList() {
             {rows.map((row, i) => (
               <Fragment key={row.spotId}>
                 {i > 0 && (
-                  <li aria-hidden className="px-4 py-0.5 pl-20 text-xs text-gray-500">
+                  <li className="px-4 py-0.5 pl-20 text-xs text-gray-500">
                     {t("walk", { minutes: legMinutes[i - 1] })}
                   </li>
                 )}
