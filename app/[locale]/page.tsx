@@ -13,7 +13,7 @@ export default function HomePage({ params }: PageProps<"/[locale]">) {
           id,
           name: name[locale as "en" | "fr"],
           coords,
-          thumbnail: photos[0]?.src ?? null,
+          thumbnail: photos[0] ? (photos[0].thumb ?? photos[0].src) : null,
         }))} />
     </main>
   );

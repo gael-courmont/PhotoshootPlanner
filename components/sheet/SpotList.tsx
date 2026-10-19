@@ -35,7 +35,7 @@ function Row({ row }: { row: SpotRow }) {
       >
       {photo && (
         <Image
-          src={photo.src}
+          src={photo.thumb ?? photo.src}
           alt=""
           width={48}
           height={48}
