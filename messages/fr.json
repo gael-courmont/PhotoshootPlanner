@@ -44,6 +44,9 @@
     },
     "photos": "Photos",
     "photoOf": "Photo {current} sur {total}",
-    "goToPhoto": "Aller à la photo {number}"
+    "goToPhoto": "Aller à la photo {number}",
+    "lightboxDescription": "Photos en plein écran. Balayez pour parcourir, balayez vers le bas ou appuyez sur Échap pour fermer.",
+    "closePhotos": "Fermer les photos",
+    "openPhoto": "Voir la photo {number} en plein écran"
   }
 }

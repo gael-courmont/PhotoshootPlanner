@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { Spot } from "@/lib/schemas";
+import { Lightbox } from "./Lightbox";
 
 export const CAROUSEL_SIZES = "(min-width: 768px) 400px, 100vw";
 
@@ -16,6 +17,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
   const [viewportRef, api] = useEmblaCarousel();
   const [index, setIndex] = useState(0);
   const [reached, setReached] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
     if (!api) return;
@@ -43,6 +45,12 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
               className="aspect-3/2 min-w-0 flex-[0_0_100%] bg-gray-100"
             >
               {i <= reached + 1 && (
+                <button
+                  type="button"
+                  aria-label={t("openPhoto", { number: i + 1 })}
+                  onClick={() => setLightboxIndex(i)}
+                  className="block size-full"
+                >
                 <Image
                   src={photo.src}
                   alt={photo.alt[locale]}
@@ -54,6 +62,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
                   blurDataURL={photo.blurDataURL}
                   className="size-full object-cover"
                 />
+                </button>
               )}
             </div>
           ))}
@@ -79,6 +88,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
           </button>
         ))}
       </div>
+      <Lightbox photos={photos} startIndex={lightboxIndex} onClose={() => setLightboxIndex(null)} />
     </div>
   );
 }
