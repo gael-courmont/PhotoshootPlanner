@@ -3,9 +3,9 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 import { setWorkerUrl, type MapLibreEvent } from "maplibre-gl";
 import { useTranslations } from "next-intl";
-import { useMemo } from "react";
-import { Layer, Map, Marker, Source } from "react-map-gl/maplibre";
-import { useSelectionStore } from "@/components/selection/SelectionProvider";
+import { useEffect, useMemo, useRef } from "react";
+import { Layer, Map, Marker, Source, type MapRef } from "react-map-gl/maplibre";
+import { useMediaQuery } from "@/components/sheet/useMediaQuery";
 import { useCustomizer } from "@/components/selection/useCustomizer";
 import {
   BUILDINGS_LAYER,
@@ -15,7 +15,7 @@ import {
   mapStyleUrl,
 } from "@/lib/map-config";
 import { routeGeoJson } from "@/lib/route-geojson";
-import { tapAction } from "@/lib/spot-tap";
+import { PEEK_PX, SIDEBAR_PX, SIDEBAR_QUERY } from "@/lib/sheet-layout";
 import { legs } from "@/lib/content";
 
 // Turbopack rewrites import.meta.url, so MapLibre cannot derive its worker URL
@@ -39,36 +39,22 @@ function addBuildings({ target: map }: MapLibreEvent) {
   map.addLayer({ ...BUILDINGS_LAYER, source: building.source }, firstLabel?.id);
 }
 
-export function SpotMap({
-  spots,
-  changingStart,
-  onStartChanged,
-}: {
-  spots: SpotMarker[];
-  changingStart: boolean;
-  onStartChanged: () => void;
-}) {
+export function SpotMap({ spots }: { spots: SpotMarker[] }) {
   const t = useTranslations("Home");
   const { selection, route, nonFittingSpotIds } = useCustomizer();
-  const setStart = useSelectionStore((s) => s.setStart);
-  const addSpot = useSelectionStore((s) => s.addSpot);
-  const removeSpot = useSelectionStore((s) => s.removeSpot);
   const routeData = useMemo(() => routeGeoJson(route, legs), [route]);
+  const mapRef = useRef<MapRef>(null);
+  const isSidebar = useMediaQuery(SIDEBAR_QUERY);
+  // Keeps the camera centred on the part of the map the sheet or sidebar leaves visible.
+  const padding = useMemo(
+    () => (isSidebar ? { left: SIDEBAR_PX, top: 0, right: 0, bottom: 0 } : { left: 0, top: 0, right: 0, bottom: PEEK_PX }),
+    [isSidebar],
+  );
 
-  const onTap = (spotId: string) => {
-    switch (tapAction(selection, spotId, changingStart)) {
-      case "setStart":
-        setStart(spotId);
-        onStartChanged();
-        break;
-      case "addSpot":
-        addSpot(spotId);
-        break;
-      case "removeSpot":
-        removeSpot(spotId);
-        break;
-    }
-  };
+  useEffect(() => {
+    mapRef.current?.setPadding(padding);
+  }, [padding]);
+
   const style = mapStyleUrl(process.env.NEXT_PUBLIC_MAPTILER_KEY);
 
   if (!style) {
@@ -81,7 +67,8 @@ export function SpotMap({
 
   return (
     <Map
-      initialViewState={INITIAL_VIEW}
+      ref={mapRef}
+      initialViewState={{ ...INITIAL_VIEW, padding }}
       mapStyle={style}
       onLoad={addBuildings}
       style={{ width: "100vw", height: "100dvh" }}
@@ -92,7 +79,7 @@ export function SpotMap({
       </Source>
       {spots.map((spot) => (
         <Marker key={spot.id} longitude={spot.coords[0]} latitude={spot.coords[1]}>
-          <button type="button" aria-label={spot.id} onClick={() => onTap(spot.id)} className="flex flex-col items-center">
+          <button type="button" aria-label={spot.id} className="flex flex-col items-center">
             {spot.id === selection.startSpotId && <span aria-label="Start">🚩</span>}
             <span
               className={`size-4 rounded-full border-2 border-white shadow ${nonFittingSpotIds.includes(spot.id) ? "bg-gray-400" : "bg-rose-600"}`}

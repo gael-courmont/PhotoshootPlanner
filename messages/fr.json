@@ -2,5 +2,22 @@
   "Home": {
     "title": "Personnalisez votre photowalk à Paris",
     "mapKeyMissing": "La carte ne peut pas se charger : NEXT_PUBLIC_MAPTILER_KEY n'est pas défini."
+  },
+  "Sheet": {
+    "title": "Votre photowalk",
+    "description": "Choisissez une formule, puis vos spots.",
+    "handle": "Agrandir ou réduire la liste des spots",
+    "package": "Formule",
+    "hint": {
+      "pickPackage": "Choisissez une formule",
+      "tapToStart": "Touchez un spot pour commencer",
+      "addSpots": "Ajoutez des spots"
+    },
+    "budget": {
+      "shooting": "Shooting",
+      "walking": "Marche"
+    },
+    "reset": "Réinitialiser",
+    "resetConfirm": "Touchez à nouveau pour réinitialiser"
   }
 }

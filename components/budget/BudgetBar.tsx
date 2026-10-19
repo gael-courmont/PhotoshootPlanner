@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { formatDuration, type BudgetStatus, type TimeBudget } from "@/lib/route";
 
 const FILL: Record<BudgetStatus, string> = {
@@ -9,6 +10,7 @@ const FILL: Record<BudgetStatus, string> = {
 };
 
 export function BudgetBar({ budget }: { budget: TimeBudget }) {
+  const t = useTranslations("Sheet.budget");
   const { totalMinutes, packageMinutes, ratio, status, shootingMinutes, walkingMinutes } = budget;
 
   return (
@@ -23,7 +25,7 @@ export function BudgetBar({ budget }: { budget: TimeBudget }) {
         />
       </div>
       <div className="text-sm">
-        Shooting {formatDuration(shootingMinutes)} · Walking {formatDuration(walkingMinutes)}
+        {t("shooting")} {formatDuration(shootingMinutes)} · {t("walking")} {formatDuration(walkingMinutes)}
       </div>
     </div>
   );

@@ -2,5 +2,22 @@
   "Home": {
     "title": "Paris Photowalk Customizer",
     "mapKeyMissing": "The map cannot load: NEXT_PUBLIC_MAPTILER_KEY is not set."
+  },
+  "Sheet": {
+    "title": "Your photowalk",
+    "description": "Pick a package, then choose your spots.",
+    "handle": "Expand or collapse the spot list",
+    "package": "Package",
+    "hint": {
+      "pickPackage": "Pick a package",
+      "tapToStart": "Tap a spot to start",
+      "addSpots": "Add spots"
+    },
+    "budget": {
+      "shooting": "Shooting",
+      "walking": "Walking"
+    },
+    "reset": "Reset",
+    "resetConfirm": "Tap again to reset"
   }
 }
