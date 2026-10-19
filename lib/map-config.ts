@@ -1,4 +1,8 @@
-import type { FillExtrusionLayerSpecification } from "maplibre-gl";
+import type {
+  FillExtrusionLayerSpecification,
+  LineLayerSpecification,
+  SymbolLayerSpecification,
+} from "maplibre-gl";
 
 // Stock MapTiler style; the custom brand style replaces it in M4.
 export const MAP_STYLE_ID = "streets-v2";
@@ -28,4 +32,26 @@ export const BUILDINGS_LAYER: Omit<FillExtrusionLayerSpecification, "source"> = 
     "fill-extrusion-base": ["get", "render_min_height"],
     "fill-extrusion-opacity": 0.85,
   },
+};
+
+// The route source holds a line per Leg and a point at its middle vertex for the label.
+export const ROUTE_LINE_LAYER: Omit<LineLayerSpecification, "source"> = {
+  id: "route-line",
+  type: "line",
+  filter: ["==", ["geometry-type"], "LineString"],
+  layout: { "line-cap": "round", "line-join": "round" },
+  paint: { "line-color": "#e11d48", "line-width": 4 },
+};
+
+export const ROUTE_LABEL_LAYER: Omit<SymbolLayerSpecification, "source"> = {
+  id: "route-labels",
+  type: "symbol",
+  filter: ["==", ["geometry-type"], "Point"],
+  layout: {
+    "text-field": ["concat", ["to-string", ["get", "walkMinutes"]], " min"],
+    "text-font": ["Noto Sans Regular"],
+    "text-size": 13,
+    "text-allow-overlap": true,
+  },
+  paint: { "text-color": "#111827", "text-halo-color": "#ffffff", "text-halo-width": 2 },
 };

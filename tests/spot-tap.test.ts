@@ -17,8 +17,20 @@ describe("tapAction", () => {
     expect(tapAction(sel("120", null), "a", false)).toBe("setStart");
   });
 
-  it("ignores taps on other spots once the start is set and not changing", () => {
-    expect(tapAction(sel("120", "a"), "b", false)).toBe("none");
+  it("adds an unselected spot once the start is set", () => {
+    expect(tapAction(sel("120", "a"), "b", false)).toBe("addSpot");
+  });
+
+  it("removes a selected spot", () => {
+    expect(tapAction(sel("120", "a", ["b"]), "b", false)).toBe("removeSpot");
+  });
+
+  it("ignores a tap on the start spot outside change-start mode", () => {
+    expect(tapAction(sel("120", "a", ["b"]), "a", false)).toBe("none");
+  });
+
+  it("makes a selected spot the new start in change-start mode", () => {
+    expect(tapAction(sel("120", "a", ["b"]), "b", true)).toBe("setStart");
   });
 
   it("sets a new start on the next tap in change-start mode", () => {
