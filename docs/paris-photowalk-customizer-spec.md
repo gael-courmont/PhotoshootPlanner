@@ -219,17 +219,17 @@ Each milestone ends with something deployed and testable on a phone. Tick tasks 
 
 ### M2 — Customizer core
 
-- [ ] Build the Zustand store holding package, start spot and selected spots, with actions to pick a package, set the start, and add or remove spots.
-- [ ] Sync the store to the URL with `nuqs` (`pkg`, `start`, `spots`). On load, restore the selection and ignore unknown ids.
-- [ ] Write pure functions in `lib/`:
+- [x] Build the Zustand store holding package, start spot and selected spots, with actions to pick a package, set the start, and add or remove spots.
+- [x] Sync the store to the URL with `nuqs` (`pkg`, `start`, `spots`). On load, restore the selection and ignore unknown ids.
+- [x] Write pure functions in `lib/`:
   - `budget`: shooting time + walking time vs. package minutes, plus the green/amber/red status
   - `order`: best walking order from the start spot
   - `fits`: which unselected spots would still fit
-- [ ] Unit-test those functions with Vitest. This is where the bugs would hide.
-- [ ] Build a simple package picker and budget bar (unstyled for now).
-- [ ] Implement the start-spot step: the first tap sets the start and adds a flag on the marker. Changing the start re-orders the route.
-- [ ] Draw the route layer by joining leg geometries into one GeoJSON line, with minutes shown per leg.
-- [ ] Grey out markers for spots that would not fit.
+- [x] Unit-test those functions with Vitest. This is where the bugs would hide.
+- [x] Build a simple package picker and budget bar (unstyled for now).
+- [x] Implement the start-spot step: the first tap sets the start and adds a flag on the marker. Changing the start re-orders the route.
+- [x] Draw the route layer by joining leg geometries into one GeoJSON line, with minutes shown per leg.
+- [x] Grey out markers for spots that would not fit.
 
 **Done when:** picking 2h, starting at Trocadéro and adding two spots shows the right route, total time and color, and a page refresh keeps the selection.
 
