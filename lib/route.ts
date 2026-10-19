@@ -61,12 +61,14 @@ export function routeOrder(selection: Selection, content: Pick<RouteContent, "le
 }
 
 function budgetFor(
-  startSpotId: string,
+  startSpotId: string | null,
   otherIds: string[],
   packageMinutes: number,
   { spots, legs }: RouteContent,
 ): TimeBudget {
-  const { order, walkingMinutes } = bestOrder(startSpotId, otherIds, legMinutes(legs));
+  const { order, walkingMinutes } = startSpotId
+    ? bestOrder(startSpotId, otherIds, legMinutes(legs))
+    : { order: [], walkingMinutes: 0 };
   const shootMinutes = new Map(spots.map((s) => [s.id, s.shootMinutes]));
   const shootingMinutes = order.reduce((sum, id) => {
     const minutes = shootMinutes.get(id);
@@ -82,11 +84,11 @@ function budgetFor(
 const packageMinutesOf = (selection: Selection, packages: Package[]) =>
   packages.find((p) => p.id === selection.packageId)?.minutes;
 
-// Null without a package. A selection without a start spot has nothing to measure yet,
-// so it is also null.
+// Null without a package. Without a start spot the route is empty and the totals are zero.
 export function timeBudget(selection: Selection, content: RouteContent): TimeBudget | null {
   const packageMinutes = packageMinutesOf(selection, content.packages);
-  if (packageMinutes === undefined || !selection.startSpotId) return null;
+  if (packageMinutes === undefined) return null;
+  if (!selection.startSpotId) return budgetFor(null, [], packageMinutes, content);
   return budgetFor(selection.startSpotId, selection.spotIds, packageMinutes, content);
 }
 

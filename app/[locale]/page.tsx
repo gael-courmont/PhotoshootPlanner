@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
+import { BudgetPanel } from "@/components/budget/BudgetPanel";
 import { SpotMapLoader } from "@/components/map/SpotMapLoader";
 import { spots } from "@/lib/content";
 
@@ -10,6 +11,7 @@ export default function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <main>
       <SpotMapLoader spots={spots.map(({ id, coords }) => ({ id, coords }))} />
+      <BudgetPanel />
     </main>
   );
 }

@@ -100,6 +100,16 @@ describe("timeBudget", () => {
     expect(timeBudget(select(null, "a", ["b"]), c)).toBeNull();
   });
 
+  it("is zero with a package but no start spot", () => {
+    expect(timeBudget(select("100", null), c)).toMatchObject({
+      order: [],
+      totalMinutes: 0,
+      packageMinutes: 100,
+      ratio: 0,
+      status: "green",
+    });
+  });
+
   it("counts only the start spot's shooting time until others are added", () => {
     expect(timeBudget(select("100", "a"), c)).toEqual({
       order: ["a"],
