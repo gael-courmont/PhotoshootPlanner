@@ -207,13 +207,13 @@ Each milestone ends with something deployed and testable on a phone. Tick tasks 
 - [ ] Connect the repo to Vercel and deploy from day one.
 - [x] Write types and Zod schemas for Spot, Package and Leg, with a content validation test.
 - [x] Create `spots.json` with 3 spots (placeholder photos, to be replaced with real ones) and `packages.json` with 60, 120 and 180 minutes.
-- [ ] Write the `build-legs` script (stub exists; ORS key is in `.env`):
-  - [ ] Pure logic in `lib/legs.ts` with Vitest tests on a recorded ORS fixture.
-  - [ ] ORS calls for every ordered pair, with retry, simplified geometry, overrides merged, output to `legs.json` only if all pairs succeed.
-  - [ ] Hash skip on `spots.json` and a `--force` flag.
+- [x] Write the `build-legs` script (stub exists; ORS key is in `.env`):
+  - [x] Pure logic in `lib/legs.ts` with Vitest tests on a recorded ORS fixture.
+  - [x] ORS calls for every ordered pair, with retry, simplified geometry, overrides merged, output to `legs.json` only if all pairs succeed.
+  - [x] Hash skip on `spots.json` and a `--force` flag.
 - [x] MapTiler key is in `.env`.
-- [ ] Confirm the MapTiler account. Build the map component with `react-map-gl/maplibre`, loaded client-only.
-- [ ] Show plain circle markers, center the camera on the Eiffel Tower area, pitch it to about 50°, and add the 3D buildings layer.
+- [x] Confirm the MapTiler account. Build the map component with `react-map-gl/maplibre`, loaded client-only.
+- [x] Show plain circle markers, center the camera on the Eiffel Tower area, pitch it to about 50°, and add the 3D buildings layer.
 
 **Done when:** the deployed URL shows the tilted map with 3 spots, and `legs.json` contains every pair.
 
