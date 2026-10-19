@@ -49,7 +49,7 @@ export function SpotMap({
   onStartChanged: () => void;
 }) {
   const t = useTranslations("Home");
-  const { selection, route } = useCustomizer();
+  const { selection, route, nonFittingSpotIds } = useCustomizer();
   const setStart = useSelectionStore((s) => s.setStart);
   const addSpot = useSelectionStore((s) => s.addSpot);
   const removeSpot = useSelectionStore((s) => s.removeSpot);
@@ -94,7 +94,9 @@ export function SpotMap({
         <Marker key={spot.id} longitude={spot.coords[0]} latitude={spot.coords[1]}>
           <button type="button" aria-label={spot.id} onClick={() => onTap(spot.id)} className="flex flex-col items-center">
             {spot.id === selection.startSpotId && <span aria-label="Start">🚩</span>}
-            <span className="size-4 rounded-full border-2 border-white bg-rose-600 shadow" />
+            <span
+              className={`size-4 rounded-full border-2 border-white shadow ${nonFittingSpotIds.includes(spot.id) ? "bg-gray-400" : "bg-rose-600"}`}
+            />
           </button>
         </Marker>
       ))}
