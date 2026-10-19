@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { PEEK_PX, SIDEBAR_PX, SIDEBAR_QUERY } from "@/lib/sheet-layout";
 import { SheetPeek } from "./SheetPeek";
+import { SpotList } from "./SpotList";
 import { useMediaQuery } from "./useMediaQuery";
 
 const SNAP_POINTS = [`${PEEK_PX}px`, 0.5];
@@ -53,7 +54,6 @@ export function Sheet() {
   );
 }
 
-// Placeholder until the spot list lands.
 function SheetBody() {
-  return null;
+  return <SpotList />;
 }

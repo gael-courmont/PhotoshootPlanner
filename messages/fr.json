@@ -17,6 +17,15 @@
       "shooting": "Shooting",
       "walking": "Marche"
     },
+    "list": {
+      "yourRoute": "Votre parcours",
+      "moreSpots": "Autres spots",
+      "allSpots": "Tous les spots",
+      "start": "Départ",
+      "doesntFit": "Trop long",
+      "walk": "{minutes} min de marche",
+      "total": "Total {duration}"
+    },
     "reset": "Réinitialiser",
     "resetConfirm": "Touchez à nouveau pour réinitialiser"
   }

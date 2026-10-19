@@ -17,6 +17,15 @@
       "shooting": "Shooting",
       "walking": "Walking"
     },
+    "list": {
+      "yourRoute": "Your route",
+      "moreSpots": "More spots",
+      "allSpots": "All spots",
+      "start": "Start",
+      "doesntFit": "Doesn't fit",
+      "walk": "{minutes} min walk",
+      "total": "Total {duration}"
+    },
     "reset": "Reset",
     "resetConfirm": "Tap again to reset"
   }
