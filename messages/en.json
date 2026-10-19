@@ -1,1 +1,6 @@
-{ "Home": { "title": "Paris Photowalk Customizer" } }
+{
+  "Home": {
+    "title": "Paris Photowalk Customizer",
+    "mapKeyMissing": "The map cannot load: NEXT_PUBLIC_MAPTILER_KEY is not set."
+  }
+}

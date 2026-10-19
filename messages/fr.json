@@ -1,1 +1,6 @@
-{ "Home": { "title": "Personnalisez votre photowalk à Paris" } }
+{
+  "Home": {
+    "title": "Personnalisez votre photowalk à Paris",
+    "mapKeyMissing": "La carte ne peut pas se charger : NEXT_PUBLIC_MAPTILER_KEY n'est pas défini."
+  }
+}
