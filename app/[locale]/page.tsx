@@ -9,7 +9,12 @@ export default function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <main>
-      <MapScreen spots={spots.map(({ id, name, coords }) => ({ id, name: name[locale as "en" | "fr"], coords }))} />
+      <MapScreen spots={spots.map(({ id, name, coords, photos }) => ({
+          id,
+          name: name[locale as "en" | "fr"],
+          coords,
+          thumbnail: photos[0]?.src ?? null,
+        }))} />
     </main>
   );
 }

@@ -16,6 +16,7 @@ import {
   mapStyleUrl,
 } from "@/lib/map-config";
 import { routeGeoJson } from "@/lib/route-geojson";
+import { PhotoMarker } from "./PhotoMarker";
 import { PEEK_PX, SIDEBAR_PX, SIDEBAR_QUERY } from "@/lib/sheet-layout";
 import { legs } from "@/lib/content";
 
@@ -25,7 +26,7 @@ setWorkerUrl(
   new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).href,
 );
 
-export type SpotMarker = { id: string; name: string; coords: [number, number] };
+export type SpotMarker = { id: string; name: string; coords: [number, number]; thumbnail: string | null };
 
 // Adds extruded buildings below the first label layer, reading the building
 // source-layer of whatever stock style is loaded.
@@ -81,12 +82,13 @@ export function SpotMap({ spots }: { spots: SpotMarker[] }) {
       </Source>
       {spots.map((spot) => (
         <Marker key={spot.id} longitude={spot.coords[0]} latitude={spot.coords[1]}>
-          <button type="button" aria-label={spot.name} onClick={() => open(spot.id)} className="flex flex-col items-center">
-            {spot.id === selection.startSpotId && <span aria-label="Start">🚩</span>}
-            <span
-              className={`size-4 rounded-full border-2 border-white shadow ${nonFittingSpotIds.includes(spot.id) ? "bg-gray-400" : "bg-rose-600"}`}
-            />
-          </button>
+          <PhotoMarker
+            spot={spot}
+            routeIndex={route.indexOf(spot.id)}
+            isStart={spot.id === selection.startSpotId}
+            fits={!nonFittingSpotIds.includes(spot.id)}
+            onOpen={() => open(spot.id)}
+          />
         </Marker>
       ))}
     </Map>
