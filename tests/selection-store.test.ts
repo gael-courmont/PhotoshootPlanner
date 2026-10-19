@@ -152,3 +152,26 @@ describe("actions", () => {
     });
   });
 });
+
+describe("no-op actions", () => {
+  it("keep the same selection when nothing changes", () => {
+    const store = seeded({ packageId: "2h", startSpotId: "a", spotIds: ["b"] });
+    const before = store.getState().selection;
+    store.getState().setPackage("2h");
+    store.getState().removeSpot("a");
+    store.getState().removeSpot("d");
+    expect(store.getState().selection).toBe(before);
+  });
+});
+
+describe("seed", () => {
+  it("replaces the selection with a sanitized one", () => {
+    const store = seeded({});
+    store.getState().seed({ packageId: "1h", startSpotId: "a", spotIds: ["b", "zzz"] });
+    expect(store.getState().selection).toEqual({
+      packageId: "1h",
+      startSpotId: "a",
+      spotIds: ["b"],
+    });
+  });
+});

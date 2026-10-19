@@ -17,6 +17,8 @@ export type SelectionState = {
   addSpot: (spotId: string) => void;
   removeSpot: (spotId: string) => void;
   reset: () => void;
+  // Re-seed from a raw (URL-shaped) selection, e.g. once the URL is readable on the client.
+  seed: (raw: RawSelection) => void;
 };
 
 function sanitize(raw: RawSelection, known: KnownIds): Selection {
@@ -36,14 +38,18 @@ function sanitize(raw: RawSelection, known: KnownIds): Selection {
   return { packageId, startSpotId, spotIds };
 }
 
-const EMPTY: Selection = { packageId: null, startSpotId: null, spotIds: [] };
+const empty = (): Selection => ({ packageId: null, startSpotId: null, spotIds: [] });
 
 export function createSelectionStore(raw: RawSelection, known: KnownIds) {
   return createStore<SelectionState>()((set) => ({
     selection: sanitize(raw, known),
     setPackage: (packageId) => {
       if (!known.packageIds.includes(packageId)) return;
-      set(({ selection }) => ({ selection: { ...selection, packageId } }));
+      set(({ selection }) =>
+        selection.packageId === packageId
+          ? {}
+          : { selection: { ...selection, packageId } },
+      );
     },
     setStart: (spotId) => {
       if (!known.spotIds.includes(spotId)) return;
@@ -70,12 +76,17 @@ export function createSelectionStore(raw: RawSelection, known: KnownIds) {
       });
     },
     removeSpot: (spotId) =>
-      set(({ selection }) => ({
-        selection: {
-          ...selection,
-          spotIds: selection.spotIds.filter((id) => id !== spotId),
-        },
-      })),
-    reset: () => set({ selection: EMPTY }),
+      set(({ selection }) =>
+        selection.spotIds.includes(spotId)
+          ? {
+              selection: {
+                ...selection,
+                spotIds: selection.spotIds.filter((id) => id !== spotId),
+              },
+            }
+          : {},
+      ),
+    reset: () => set({ selection: empty() }),
+    seed: (rawSelection) => set({ selection: sanitize(rawSelection, known) }),
   }));
 }

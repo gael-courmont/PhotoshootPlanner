@@ -5,7 +5,14 @@ import {
   parseAsString,
   useQueryStates,
 } from "nuqs";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Suspense,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useStore } from "zustand";
 import type { Selection } from "@/lib/schemas";
 import {
@@ -38,38 +45,47 @@ export function SelectionProvider({
   known: KnownIds;
   children: React.ReactNode;
 }) {
+  const [store] = useState(() => createSelectionStore({}, known));
+
+  return (
+    <SelectionContext.Provider value={store}>
+      {/* useQueryStates opts into client rendering, so it lives in its own Suspense boundary to keep pages statically rendered. */}
+      <Suspense fallback={null}>
+        <UrlSync store={store} />
+      </Suspense>
+      {children}
+    </SelectionContext.Provider>
+  );
+}
+
+function UrlSync({ store }: { store: SelectionStore }) {
   const [query, setQuery] = useQueryStates(urlParsers, {
     shallow: true,
     history: "replace",
     scroll: false,
   });
-
-  // The URL is read once, here; after that the sync is store -> URL only.
-  const [store] = useState(() =>
-    createSelectionStore(
-      {
-        packageId: query.pkg,
-        startSpotId: query.start,
-        spotIds: query.spots ?? [],
-      },
-      known,
-    ),
-  );
+  // Always call the latest setQuery from the long-lived subscription.
+  const setQueryRef = useRef(setQuery);
+  useEffect(() => {
+    setQueryRef.current = setQuery;
+  });
 
   useEffect(() => {
-    // Normalise the URL to the sanitized seed, then mirror every change.
-    void setQuery(toUrl(store.getState().selection));
-    return store.subscribe((state, prev) => {
-      if (state.selection !== prev.selection) void setQuery(toUrl(state.selection));
+    // The URL is read once, here; after that the sync is store -> URL only.
+    store.getState().seed({
+      packageId: query.pkg,
+      startSpotId: query.start,
+      spotIds: query.spots ?? [],
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- setQuery identity changes with the URL; we only want to subscribe once
+    void setQueryRef.current(toUrl(store.getState().selection));
+    return store.subscribe((state, prev) => {
+      if (state.selection !== prev.selection)
+        void setQueryRef.current(toUrl(state.selection));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- seed from the URL only on mount
   }, [store]);
 
-  return (
-    <SelectionContext.Provider value={store}>
-      {children}
-    </SelectionContext.Provider>
-  );
+  return null;
 }
 
 export function useSelectionStore<T>(selector: (state: SelectionState) => T): T {

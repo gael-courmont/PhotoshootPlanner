@@ -3,7 +3,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { Suspense } from "react";
 import { SelectionProvider } from "@/components/selection/SelectionProvider";
 import { packages, spots } from "@/lib/content";
 import { routing } from "@/i18n/routing";
@@ -36,9 +35,7 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <NuqsAdapter>
-            <Suspense>
-              <SelectionProvider known={known}>{children}</SelectionProvider>
-            </Suspense>
+            <SelectionProvider known={known}>{children}</SelectionProvider>
           </NuqsAdapter>
         </NextIntlClientProvider>
       </body>
