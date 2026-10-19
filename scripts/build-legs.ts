@@ -3,8 +3,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import { buildLegs, hashSpots, RoutingHttpError, shouldRebuild } from "../lib/legs";
-import { spotSchema, type Spot } from "../lib/schemas";
+import { buildLegs, hashInputs, RoutingHttpError, shouldRebuild } from "../lib/legs";
+import { legSchema, spotSchema, type Spot } from "../lib/schemas";
 
 const ORS_URL = "https://api.openrouteservice.org/v2/directions/foot-walking/geojson";
 const contentDir = path.join(__dirname, "..", "content");
@@ -28,9 +28,10 @@ async function main() {
     .record(z.string(), z.object({ walkMinutes: z.number().nonnegative() }))
     .parse(readJson("legs.overrides.json"));
 
+  const legs = z.array(legSchema).parse(readJson("legs.json"));
   const storedHash = existsSync(file("legs.hash")) ? readFileSync(file("legs.hash"), "utf8").trim() : null;
-  if (!shouldRebuild({ spots, storedHash, force })) {
-    console.log("Spots unchanged since the last run; skipping. Use --force to recompute.");
+  if (!shouldRebuild({ spots, overrides, legs, storedHash, force })) {
+    console.log("Spots, overrides and legs unchanged since the last run; skipping. Use --force to recompute.");
     return;
   }
 
@@ -51,12 +52,12 @@ async function main() {
     return res.json();
   };
 
-  const legs = await buildLegs({ spots, overrides, fetchRoute });
+  const newLegs = await buildLegs({ spots, overrides, fetchRoute });
 
   // Written only after every pair succeeded, so a partial file can never be committed.
-  writeFileSync(file("legs.json"), JSON.stringify(legs, null, 2) + "\n");
-  writeFileSync(file("legs.hash"), hashSpots(spots) + "\n");
-  console.log(`Wrote ${legs.length} legs.`);
+  writeFileSync(file("legs.json"), JSON.stringify(newLegs, null, 2) + "\n");
+  writeFileSync(file("legs.hash"), hashInputs(spots, overrides) + "\n");
+  console.log(`Wrote ${newLegs.length} legs.`);
 }
 
 main().catch((e) => {

@@ -4,6 +4,8 @@ import { z } from "zod";
 import { legSchema, type Leg, type Spot } from "./schemas";
 
 // Returns the raw OpenRouteService foot-walking GeoJSON response for one directed pair.
+export type Overrides = Record<string, { walkMinutes: number }>;
+
 export type FetchRoute = (from: Spot, to: Spot) => Promise<unknown>;
 
 export class RoutingHttpError extends Error {
@@ -70,7 +72,7 @@ function toLeg(from: Spot, to: Spot, response: unknown): Leg {
 
 export async function buildLegs(input: {
   spots: Spot[];
-  overrides: Record<string, { walkMinutes: number }>;
+  overrides: Overrides;
   fetchRoute: FetchRoute;
   sleep?: (ms: number) => Promise<void>;
 }): Promise<Leg[]> {
@@ -94,8 +96,25 @@ export async function buildLegs(input: {
   return legs;
 }
 
-export const hashSpots = (spots: Spot[]) =>
-  createHash("sha256").update(JSON.stringify(spots)).digest("hex");
+// Only what determines the legs: spot ids and coordinates, and the overrides. Order-independent.
+export function hashInputs(spots: Spot[], overrides: Overrides): string {
+  const routing = spots
+    .map((s) => ({ id: s.id, coords: s.coords }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+  const sortedOverrides = Object.entries(overrides).sort(([a], [b]) => a.localeCompare(b));
+  return createHash("sha256").update(JSON.stringify([routing, sortedOverrides])).digest("hex");
+}
 
-export const shouldRebuild = (input: { spots: Spot[]; storedHash: string | null; force: boolean }) =>
-  input.force || input.storedHash !== hashSpots(input.spots);
+export function shouldRebuild(input: {
+  spots: Spot[];
+  overrides: Overrides;
+  legs: Leg[];
+  storedHash: string | null;
+  force: boolean;
+}): boolean {
+  if (input.force || input.storedHash !== hashInputs(input.spots, input.overrides)) return true;
+  const have = new Set(input.legs.map((l) => `${l.from}>${l.to}`));
+  return input.spots.some((a) =>
+    input.spots.some((b) => a.id !== b.id && !have.has(`${a.id}>${b.id}`)),
+  );
+}
