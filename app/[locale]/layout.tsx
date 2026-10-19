@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
+import { SelectionProvider } from "@/components/selection/SelectionProvider";
+import { packages, spots } from "@/lib/content";
 import { routing } from "@/i18n/routing";
 import "./globals.css";
 
@@ -22,10 +26,21 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
+  const known = {
+    packageIds: packages.map((p) => p.id),
+    spotIds: spots.map((s) => s.id),
+  };
+
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <NuqsAdapter>
+            <Suspense>
+              <SelectionProvider known={known}>{children}</SelectionProvider>
+            </Suspense>
+          </NuqsAdapter>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
