@@ -41,6 +41,9 @@
       "makeStart": "Make this the start",
       "add": "Add",
       "remove": "Remove"
-    }
+    },
+    "photos": "Photos",
+    "photoOf": "Photo {current} of {total}",
+    "goToPhoto": "Go to photo {number}"
   }
 }

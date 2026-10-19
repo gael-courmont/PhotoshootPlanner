@@ -1,7 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
+import { PhotoCarousel } from "@/components/carousel/PhotoCarousel";
 import { useSelectionStore } from "@/components/selection/SelectionProvider";
 import { useCustomizer } from "@/components/selection/useCustomizer";
 import { legs, packages, spots } from "@/lib/content";
@@ -59,21 +59,11 @@ export function SpotDetail({ spotId }: { spotId: string }) {
   const { selection } = useCustomizer();
   const spot = spots.find((s) => s.id === spotId);
   if (!spot) return null;
-  const photo = spot.photos[0];
   const action = spotAction(selection, spotId, content);
 
   return (
     <div className="flex flex-col gap-3 pb-6">
-      {photo && (
-        <Image
-          src={photo.src}
-          alt={photo.alt[locale]}
-          width={photo.w}
-          height={photo.h}
-          priority
-          className="aspect-3/2 w-full bg-gray-100 object-cover"
-        />
-      )}
+      <PhotoCarousel key={spotId} photos={spot.photos} />
       <div className="flex flex-col gap-2 px-4">
         <h2 className="text-xl font-semibold">{spot.name[locale]}</h2>
         <p className="text-sm text-gray-600">{t("shootingTime", { duration: formatDuration(spot.shootMinutes) })}</p>

@@ -15,6 +15,8 @@ export const spotSchema = z.object({
         alt: localizedTextSchema,
         w: z.number().int().positive(),
         h: z.number().int().positive(),
+        // Tiny base64 image shown while the photo loads; written by the image pipeline.
+        blurDataURL: z.string().optional(),
       }),
     )
     .min(3)
