@@ -1,7 +1,8 @@
 {
   "Home": {
     "title": "Personnalisez votre photowalk à Paris",
-    "mapKeyMissing": "La carte ne peut pas se charger : NEXT_PUBLIC_MAPTILER_KEY n'est pas défini."
+    "mapKeyMissing": "La carte ne peut pas se charger : NEXT_PUBLIC_MAPTILER_KEY n'est pas défini.",
+    "description": "Choisissez une formule, vos spots, et voyez votre parcours."
   },
   "Sheet": {
     "title": "Votre photowalk",
@@ -48,5 +49,9 @@
     "lightboxDescription": "Photos en plein écran. Balayez pour parcourir, balayez vers le bas ou appuyez sur Échap pour fermer.",
     "closePhotos": "Fermer les photos",
     "openPhoto": "Voir la photo {number} en plein écran"
+  },
+  "Language": {
+    "en": "English",
+    "fr": "Français"
   }
 }

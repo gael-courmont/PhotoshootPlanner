@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  parseAsArrayOf,
-  parseAsString,
-  useQueryStates,
-} from "nuqs";
+import { useQueryStates } from "nuqs";
 import {
   createContext,
   Suspense,
@@ -14,7 +10,7 @@ import {
   useState,
 } from "react";
 import { useStore } from "zustand";
-import type { Selection } from "@/lib/schemas";
+import { toUrl, urlParsers } from "@/lib/selection-url";
 import {
   createSelectionStore,
   type KnownIds,
@@ -24,19 +20,6 @@ import {
 type SelectionStore = ReturnType<typeof createSelectionStore>;
 
 const SelectionContext = createContext<SelectionStore | null>(null);
-
-// Key order is the URL param order: pkg, start, spots.
-const urlParsers = {
-  pkg: parseAsString,
-  start: parseAsString,
-  spots: parseAsArrayOf(parseAsString),
-};
-
-const toUrl = (s: Selection) => ({
-  pkg: s.packageId,
-  start: s.startSpotId,
-  spots: s.spotIds.length ? s.spotIds : null,
-});
 
 export function SelectionProvider({
   known,

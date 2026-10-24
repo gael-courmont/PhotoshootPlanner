@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -23,10 +23,11 @@ const cormorant = localFont({
   variable: "--font-cormorant",
 });
 
-export const metadata: Metadata = {
-  title: "Paris Photowalk Customizer",
-  description: "Pick a package, choose your spots, see your route.",
-};
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Home" });
+  return { title: t("title"), description: t("description") };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

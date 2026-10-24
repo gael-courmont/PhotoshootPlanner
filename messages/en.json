@@ -1,7 +1,8 @@
 {
   "Home": {
     "title": "Paris Photowalk Customizer",
-    "mapKeyMissing": "The map cannot load: NEXT_PUBLIC_MAPTILER_KEY is not set."
+    "mapKeyMissing": "The map cannot load: NEXT_PUBLIC_MAPTILER_KEY is not set.",
+    "description": "Pick a package, choose your spots, see your route."
   },
   "Sheet": {
     "title": "Your photowalk",
@@ -48,5 +49,9 @@
     "lightboxDescription": "Full-screen photos. Swipe to browse, swipe down or press Escape to close.",
     "closePhotos": "Close the photos",
     "openPhoto": "View photo {number} full screen"
+  },
+  "Language": {
+    "en": "English",
+    "fr": "Français"
   }
 }
