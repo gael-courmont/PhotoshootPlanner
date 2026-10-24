@@ -52,6 +52,14 @@ _Avoid_: checkout, booking
 The minutes needed to walk a leg: the routing service's estimate rounded up to whole minutes, unless the photographer has overridden it.
 _Avoid_: travel time, transit time
 
+**Locale**:
+The language of the app, English or French, carried in the URL path.
+_Avoid_: language (in code), lang
+
+**Spot page**:
+The standalone, indexable page for one Spot, with its photos and a way to start a photowalk there.
+_Avoid_: landing page, detail page
+
 **Override**:
 The photographer's manual correction of a leg's walking time, for real-world quirks such as stairs, crowds or a closed bridge.
 _Avoid_: patch, adjustment

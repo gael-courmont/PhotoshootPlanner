@@ -84,7 +84,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
             onClick={() => api?.scrollTo(i)}
             className="flex size-6 items-center justify-center"
           >
-            <span className={`size-2 rounded-full ${i === index ? "bg-paper border-stone" : "bg-paper/50"}`} />
+            <span className={`size-2 rounded-full ${i === index ? "bg-paper" : "bg-paper/50"}`} />
           </button>
         ))}
       </div>
