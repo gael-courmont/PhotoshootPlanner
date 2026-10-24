@@ -1,28 +1,44 @@
 @import "tailwindcss";
 
+/* Palette "Paris dusk". `gold` is for non-text use only; text uses `gold-deep` (4.5:1 on cream). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #f4ede0;
+  --paper: #fbf8f2;
+  --stone: #e6dcc8;
+  --sage: #cbd3b6;
+  --seine: #6f8fa3;
+  --ink: #1e2a33;
+  --ink-soft: #5a6670;
+  --gold: #c19a3e;
+  --gold-deep: #8a6a1f;
+  --green: #5e8c61;
+  --amber: #d9922b;
+  --red: #b5483c;
+  --muted: #a39d90;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-sage: var(--sage);
+  --color-seine: var(--seine);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-green: var(--green);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -27,7 +27,7 @@ export function Sheet() {
       <aside
         aria-label={t("title")}
         style={{ width: SIDEBAR_PX }}
-        className="fixed inset-y-0 left-0 flex flex-col gap-3 overflow-y-auto bg-white pt-4 shadow-lg"
+        className="fixed inset-y-0 left-0 flex flex-col gap-3 overflow-y-auto bg-paper pt-4 shadow-lg"
       >
         <SheetPeek />
         {openSpotId ? (
@@ -56,10 +56,10 @@ export function Sheet() {
         setActiveSnapPoint={setSnap}
       >
         <Drawer.Portal>
-          <Drawer.Content className="fixed inset-x-0 bottom-0 flex h-full max-h-[97%] flex-col rounded-t-2xl bg-white shadow-lg outline-none">
+          <Drawer.Content className="fixed inset-x-0 bottom-0 flex h-full max-h-[97%] flex-col rounded-t-2xl bg-paper shadow-lg outline-none">
             <Drawer.Title className="sr-only">{t("title")}</Drawer.Title>
             <Drawer.Description className="sr-only">{t("description")}</Drawer.Description>
-            <Drawer.Handle aria-label={t("handle")} className="!my-0 !h-11 !w-full !bg-transparent after:!top-4 after:!h-1.5 after:!w-12 after:!rounded-full after:!bg-gray-300" />
+            <Drawer.Handle aria-label={t("handle")} className="!my-0 !h-11 !w-full !bg-transparent after:!top-4 after:!h-1.5 after:!w-12 after:!rounded-full after:!bg-muted" />
             <SheetPeek />
             <div className="min-h-0 flex-1 overflow-y-auto pb-[50dvh]">
               <SpotList />
@@ -69,11 +69,11 @@ export function Sheet() {
       </Drawer.Root>
       <Drawer.Root open={!!openSpotId} handleOnly onOpenChange={(open) => !open && close()}>
         <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-          <Drawer.Content className="fixed inset-x-0 bottom-0 flex max-h-[92%] flex-col rounded-t-2xl bg-white outline-none">
+          <Drawer.Overlay className="fixed inset-0 bg-ink/40" />
+          <Drawer.Content className="fixed inset-x-0 bottom-0 flex max-h-[92%] flex-col rounded-t-2xl bg-paper outline-none">
             <Drawer.Title className="sr-only">{openSpot ? openSpot.name[locale] : ""}</Drawer.Title>
             <Drawer.Description className="sr-only">{t("detailDescription")}</Drawer.Description>
-            <Drawer.Handle aria-label={t("closeDetail")} className="!my-0 !h-6 !w-full !bg-transparent after:!top-2 after:!h-1.5 after:!w-12 after:!rounded-full after:!bg-gray-300" />
+            <Drawer.Handle aria-label={t("closeDetail")} className="!my-0 !h-6 !w-full !bg-transparent after:!top-2 after:!h-1.5 after:!w-12 after:!rounded-full after:!bg-muted" />
             <div className="min-h-0 flex-1 overflow-y-auto">{openSpotId && <SpotDetail spotId={openSpotId} />}</div>
           </Drawer.Content>
         </Drawer.Portal>

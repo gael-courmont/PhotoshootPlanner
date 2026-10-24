@@ -19,7 +19,7 @@ export function PhotoMarker({
   onOpen: () => void;
 }) {
   const selected = routeIndex >= 0;
-  const ring = selected ? "ring-4 ring-amber-400" : "ring-2 ring-white";
+  const ring = selected ? "ring-4 ring-gold" : "ring-2 ring-paper";
 
   return (
     <button
@@ -29,19 +29,19 @@ export function PhotoMarker({
       className="relative flex size-11 items-center justify-center rounded-full"
     >
       <span
-        className={`block size-11 overflow-hidden rounded-full bg-gray-300 shadow-md ${ring} ${fits ? "" : "opacity-60 grayscale"}`}
+        className={`block size-11 overflow-hidden rounded-full bg-stone shadow-md ${ring} ${fits ? "" : "opacity-60 grayscale"}`}
       >
         {spot.thumbnail && (
           <Image src={spot.thumbnail} alt="" width={44} height={44} className="size-full object-cover" />
         )}
       </span>
       {selected && !isStart && (
-        <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-amber-400 text-xs font-bold text-black">
+        <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-gold text-xs font-bold text-ink">
           {routeIndex + 1}
         </span>
       )}
       {isStart && (
-        <span aria-hidden className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full bg-amber-400 text-sm">
+        <span aria-hidden className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full bg-gold text-sm">
           🚩
         </span>
       )}

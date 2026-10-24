@@ -39,12 +39,12 @@ function ActionButton({
         disabled={!!disabled}
         aria-describedby={reason ? `reason-${button.kind}` : undefined}
         onClick={() => run(spotId)}
-        className={`min-h-11 rounded-lg px-4 font-medium disabled:opacity-50 ${primary ? "bg-black text-white" : "border"}`}
+        className={`min-h-11 rounded-lg px-4 font-medium disabled:opacity-50 ${primary ? "bg-ink text-paper" : "border border-ink"}`}
       >
         {t(`action.${button.kind}`)}
       </button>
       {reason && (
-        <p id={`reason-${button.kind}`} className="text-sm text-gray-600">
+        <p id={`reason-${button.kind}`} className="text-sm text-ink-soft">
           {reason}
         </p>
       )}
@@ -65,8 +65,8 @@ export function SpotDetail({ spotId }: { spotId: string }) {
     <div className="flex flex-col gap-3 pb-6">
       <PhotoCarousel key={spotId} photos={spot.photos} />
       <div className="flex flex-col gap-2 px-4">
-        <h2 className="text-xl font-semibold">{spot.name[locale]}</h2>
-        <p className="text-sm text-gray-600">{t("shootingTime", { duration: formatDuration(spot.shootMinutes) })}</p>
+        <h2 className="font-serif text-3xl font-semibold">{spot.name[locale]}</h2>
+        <p className="text-sm text-ink-soft">{t("shootingTime", { duration: formatDuration(spot.shootMinutes) })}</p>
         <p>{spot.description[locale]}</p>
         {action.primary && <ActionButton button={action.primary} spotId={spotId} primary />}
         {action.secondary && <ActionButton button={action.secondary} spotId={spotId} primary={false} />}

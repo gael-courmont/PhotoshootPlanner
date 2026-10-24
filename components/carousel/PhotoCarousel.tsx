@@ -42,7 +42,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
               role="group"
               aria-roledescription="slide"
               aria-label={t("photoOf", { current: i + 1, total: photos.length })}
-              className="aspect-3/2 min-w-0 flex-[0_0_100%] bg-gray-100"
+              className="aspect-3/2 min-w-0 flex-[0_0_100%] bg-stone"
             >
               {i <= reached + 1 && (
                 <button
@@ -70,7 +70,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
       </div>
       <span
         aria-live="polite"
-        className="absolute top-3 right-3 rounded-full bg-black/60 px-2 py-0.5 text-xs text-white"
+        className="absolute top-3 right-3 rounded-full bg-ink/60 px-2 py-0.5 text-xs text-paper"
       >
         {index + 1} / {photos.length}
       </span>
@@ -84,7 +84,7 @@ export function PhotoCarousel({ photos }: { photos: Spot["photos"] }) {
             onClick={() => api?.scrollTo(i)}
             className="flex size-6 items-center justify-center"
           >
-            <span className={`size-2 rounded-full ${i === index ? "bg-white" : "bg-white/50"}`} />
+            <span className={`size-2 rounded-full ${i === index ? "bg-paper border-stone" : "bg-paper/50"}`} />
           </button>
         ))}
       </div>

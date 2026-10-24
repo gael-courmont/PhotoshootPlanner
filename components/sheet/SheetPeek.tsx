@@ -31,7 +31,7 @@ function ResetButton() {
         setConfirming(false);
         reset();
       }}
-      className={`min-h-11 shrink-0 rounded px-3 text-sm ${confirming ? "bg-red-600 text-white" : "text-gray-600 underline"}`}
+      className={`min-h-11 shrink-0 rounded px-3 text-sm ${confirming ? "bg-red text-paper" : "text-ink-soft underline"}`}
     >
       {confirming ? t("resetConfirm") : t("reset")}
     </button>
@@ -49,7 +49,7 @@ export function SheetPeek() {
         <PackagePicker />
         <ResetButton />
       </div>
-      <p className="text-sm text-gray-600">{t(`hint.${stepHint(selection)}`)}</p>
+      <p className="text-sm text-ink-soft">{t(`hint.${stepHint(selection)}`)}</p>
       {budget && <BudgetBar budget={budget} />}
     </div>
   );

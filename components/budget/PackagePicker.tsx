@@ -18,7 +18,7 @@ export function PackagePicker() {
           type="button"
           aria-pressed={p.id === packageId}
           onClick={() => setPackage(p.id)}
-          className={`min-h-11 min-w-11 rounded border px-3 ${p.id === packageId ? "bg-black text-white" : "bg-white"}`}
+          className={`min-h-11 min-w-11 rounded border border-stone px-3 ${p.id === packageId ? "bg-ink text-paper" : "bg-paper"}`}
         >
           {formatDuration(p.minutes)}
         </button>

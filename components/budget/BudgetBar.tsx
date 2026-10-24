@@ -4,9 +4,9 @@ import { useTranslations } from "next-intl";
 import { formatDuration, type BudgetStatus, type TimeBudget } from "@/lib/route";
 
 const FILL: Record<BudgetStatus, string> = {
-  green: "bg-green-500",
-  amber: "bg-amber-500",
-  red: "bg-red-500",
+  green: "bg-green",
+  amber: "bg-amber",
+  red: "bg-red",
 };
 
 export function BudgetBar({ budget }: { budget: TimeBudget }) {
@@ -18,7 +18,7 @@ export function BudgetBar({ budget }: { budget: TimeBudget }) {
       <div>
         {formatDuration(totalMinutes)} / {formatDuration(packageMinutes)}
       </div>
-      <div className="h-2 w-full overflow-hidden rounded bg-gray-200">
+      <div className="h-2 w-full overflow-hidden rounded bg-stone">
         <div
           className={`h-full ${FILL[status]}`}
           style={{ width: `${Math.min(ratio, 1) * 100}%` }}

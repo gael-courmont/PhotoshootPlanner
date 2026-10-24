@@ -30,7 +30,7 @@ export function Lightbox({
     <Drawer.Root open={startIndex !== null} onOpenChange={(open) => !open && onClose()} handleOnly>
       <Drawer.Portal>
         <Drawer.Content
-          className="fixed inset-0 z-50 flex flex-col bg-black outline-none"
+          className="fixed inset-0 z-50 flex flex-col bg-ink outline-none"
           onTouchStart={(e) => {
             const touch = e.touches[0];
             touchStart.current = { x: touch.clientX, y: touch.clientY };
@@ -50,7 +50,7 @@ export function Lightbox({
             type="button"
             onClick={onClose}
             aria-label={t("closePhotos")}
-            className="absolute top-3 right-3 z-10 flex size-11 items-center justify-center rounded-full bg-white/20 text-xl text-white"
+            className="absolute top-3 right-3 z-10 flex size-11 items-center justify-center rounded-full bg-paper/20 text-xl text-paper"
           >
             ✕
           </button>
