@@ -235,14 +235,15 @@ Each milestone ends with something deployed and testable on a phone. Tick tasks 
 
 ### M3 — Photo experience
 
-- [ ] Build the bottom sheet with Vaul, using three snap points (peek, half, full). On desktop, it becomes a sidebar at a breakpoint.
-- [ ] Put a spot list in the half state, so every spot is reachable without the map.
-- [ ] Build the spot sheet: Embla carousel, full-screen view, description, shooting time, and the Start here / Add / Remove button.
-- [ ] Set up the image pipeline:
-  - Export photos from her library at about 2000 px on the long edge.
-  - Use `next/image` with proper `sizes` and blur placeholders.
-  - Turn markers into round photo thumbnails.
-- [ ] Add drag-to-reorder in the selected list, with the start spot locked first (dnd-kit).
+**Amendments (Oct 19, 2026):** the sheet is two layers, not three snap points: the main sheet has peek and half, and the spot detail is its own drawer over it (on desktop the sidebar swaps between list and detail). Drag-to-reorder is dropped: the route order stays derived (ADR 0001) and the client cannot reorder. A marker tap always opens the spot detail; its button is the only way to change the Selection, and change-start mode is gone. Spots can be browsed without a package, and greyed spots can still be opened but not added. The open spot is UI state, not Selection, and stays out of the URL. New UI strings go through `next-intl` from the start.
+
+- [ ] Sheet shell: Vaul sheet with peek and half snap points, a sidebar at `md`, map padding that follows it, change-start mode removed.
+- [ ] Spot list in the half state: "Your route" (start first, leg minutes, total) and "More spots" (badges, greyed last).
+- [ ] Spot detail with the Start here / Make this the start / Add / Remove button and its disabled reasons.
+- [ ] Embla carousel with an indicator, first photo eager and the rest lazy.
+- [ ] Full-screen lightbox with close and swipe-down.
+- [ ] Photo-thumbnail markers with gold ring, order number and start flag (first photo of each spot).
+- [ ] Image pipeline script: `photos/<spot-id>/*` to optimised sizes and blur placeholders.
 
 **Done when:** on a real phone over 4G, tapping a spot shows its photos in about a second, and the sheet feels native.
 
