@@ -49,7 +49,7 @@ export default async function SpotPage({
   const lang = locale as "en" | "fr";
 
   return (
-    <main className="mx-auto flex max-w-3xl flex-col gap-4 p-4 md:p-8">
+    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col gap-4 bg-paper p-4 md:p-8">
       <Link href="/" className="inline-flex min-h-11 items-center text-sm text-gold-deep underline">
         {t("backToMap")}
       </Link>

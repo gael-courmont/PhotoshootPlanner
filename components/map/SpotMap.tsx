@@ -60,11 +60,12 @@ export function SpotMap({ spots }: { spots: SpotMarker[] }) {
   }, [padding]);
 
   // Fly to a spot when it is opened, centred on the visible map area. The spot already open at
-  // mount (handed over by a Locale switch) is not flown to.
+  // mount, or opened before the map loaded (handed over by a Locale switch), is not flown to.
   const reducedMotion = useMediaQuery(REDUCED_MOTION_QUERY);
   const lastOpened = useRef(openSpotId);
+  const loaded = useRef(false);
   useEffect(() => {
-    if (openSpotId === lastOpened.current) return;
+    if (!loaded.current || openSpotId === lastOpened.current) return;
     lastOpened.current = openSpotId;
     const spot = spots.find((s) => s.id === openSpotId);
     if (!spot) return;
@@ -86,7 +87,11 @@ export function SpotMap({ spots }: { spots: SpotMarker[] }) {
       ref={mapRef}
       initialViewState={{ ...INITIAL_VIEW, padding }}
       mapStyle={style}
-      onLoad={addBuildings}
+      onLoad={(e) => {
+        loaded.current = true;
+        lastOpened.current = openSpotId;
+        addBuildings(e);
+      }}
       style={{ width: "100vw", height: "100dvh" }}
     >
       <Source id="route" type="geojson" data={routeData}>

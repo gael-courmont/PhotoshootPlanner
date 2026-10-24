@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Palette "Paris dusk". `gold` is for non-text use only; text uses `gold-deep` (4.5:1 on cream). */
+/* Palette "Paris dusk". `gold` is for non-text use only; text uses `gold-deep`, which is 4.76:1 on paper but 4.33:1 on cream, so only on paper. */
 :root {
   --cream: #f4ede0;
   --paper: #fbf8f2;
