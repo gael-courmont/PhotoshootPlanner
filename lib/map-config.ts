@@ -55,3 +55,8 @@ export const ROUTE_LABEL_LAYER: Omit<SymbolLayerSpecification, "source"> = {
   },
   paint: { "text-color": "#111827", "text-halo-color": "#ffffff", "text-halo-width": 2 },
 };
+
+// Motion: the camera flight to a tapped spot and the draw-in of newly added legs.
+export const FLY_MS = 500;
+export const REVEAL_MS = 500;
+export const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";

@@ -237,25 +237,31 @@ Each milestone ends with something deployed and testable on a phone. Tick tasks 
 
 **Amendments (Oct 19, 2026):** the sheet is two layers, not three snap points: the main sheet has peek and half, and the spot detail is its own drawer over it (on desktop the sidebar swaps between list and detail). Drag-to-reorder is dropped: the route order stays derived (ADR 0001) and the client cannot reorder. A marker tap always opens the spot detail; its button is the only way to change the Selection, and change-start mode is gone. Spots can be browsed without a package, and greyed spots can still be opened but not added. The open spot is UI state, not Selection, and stays out of the URL. New UI strings go through `next-intl` from the start.
 
-- [ ] Sheet shell: Vaul sheet with peek and half snap points, a sidebar at `md`, map padding that follows it, change-start mode removed.
-- [ ] Spot list in the half state: "Your route" (start first, leg minutes, total) and "More spots" (badges, greyed last).
-- [ ] Spot detail with the Start here / Make this the start / Add / Remove button and its disabled reasons.
-- [ ] Embla carousel with an indicator, first photo eager and the rest lazy.
-- [ ] Full-screen lightbox with close and swipe-down.
-- [ ] Photo-thumbnail markers with gold ring, order number and start flag (first photo of each spot).
-- [ ] Image pipeline script: `photos/<spot-id>/*` to optimised sizes and blur placeholders.
+- [x] Sheet shell: Vaul sheet with peek and half snap points, a sidebar at `md`, map padding that follows it, change-start mode removed.
+- [x] Spot list in the half state: "Your route" (start first, leg minutes, total) and "More spots" (badges, greyed last).
+- [x] Spot detail with the Start here / Make this the start / Add / Remove button and its disabled reasons.
+- [x] Embla carousel with an indicator, first photo eager and the rest lazy.
+- [x] Full-screen lightbox with close and swipe-down.
+- [x] Photo-thumbnail markers with gold ring, order number and start flag (first photo of each spot).
+- [x] Image pipeline script: `photos/<spot-id>/*` to optimised sizes and blur placeholders.
 
 **Done when:** on a real phone over 4G, tapping a spot shows its photos in about a second, and the sheet feels native.
 
 ### M4 — Polish
 
+**Amendments (Oct 24, 2026):** `[locale]` routes, `next-intl` and FR/EN strings already exist from M3, so i18n reduces to the language toggle. The host is undecided (Vercel Hobby is non-commercial), so deploy is a host-agnostic human task that blocks analytics and the performance pass. The palette is "Paris dusk" (cream `#F4EDE0`, stone `#E6DCC8`, sage `#CBD3B6`, Seine `#6F8FA3`, ink `#1E2A33`, gold `#C19A3E`, text-safe gold `#8A6A1F`), with Cormorant Garamond for titles and Inter for UI. Motion: fly-to about 500 ms centred on the padded visible area; the route reveal animates only newly added legs, and never on first load, a restored link, or with reduced motion. Locale detection stays on and the toggle sits on the map. Spot pages use the first photo as the Open Graph image, with `hreflang` and a sitemap, and no JSON-LD. Analytics is Plausible behind a typed `track()` helper; the summary-copied and Continue-clicked events belong to M5. Audits target mobile Lighthouse Performance ≥ 90 and Accessibility ≥ 95. Issue drafts: `docs/m4-issue-drafts.md`.
+
+- [ ] Deploy to a host (host to be chosen by the photographer).
+- [x] Add design tokens and fonts, and restyle the existing UI onto them.
 - [ ] Create the custom map style in the MapTiler editor: brand palette, fewer labels, landmarks kept.
-- [ ] Add motion: the camera flies to a tapped spot and the route animates as it draws, with a reduced-motion fallback.
-- [ ] Add i18n with `next-intl`: `[locale]` routes, FR/EN text in the content JSON, and a language toggle.
-- [ ] Build the spot SEO pages: `generateStaticParams`, metadata, an Open Graph image, and a button that opens the customizer with that spot as the start.
-- [ ] Add analytics events: package picked, start set, spot added, summary copied, Continue clicked.
+- [ ] Wire the custom style, route, label, marker and building colours onto the tokens.
+- [x] Add the language toggle, keeping the Selection across a switch.
+- [x] Add motion: the camera flies to a tapped spot and the route animates as it draws, with a reduced-motion fallback.
+- [x] Build the spot SEO pages: `generateStaticParams`, metadata, an Open Graph image, and a button that opens the customizer with that spot as the start.
+- [ ] Add analytics: typed `track()` helper, with package picked, start set and spot added wired now.
 - [ ] Do a performance pass: Lighthouse on mobile, a bundle size check, and confirm MapLibre is lazy-loaded.
 - [ ] Do an accessibility pass: touch targets, alt text, and keyboard use on desktop.
+- [ ] Photographer sign-off on the preview deploy.
 
 **Done when:** the photographer approves the look, and the map is interactive in under 3 s on a mid-range phone.
 
