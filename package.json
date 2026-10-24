@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build-legs": "tsx scripts/build-legs.ts",
-    "build-images": "tsx scripts/build-images.ts"
+    "build-images": "tsx scripts/build-images.ts",
+    "build-map-style": "tsx scripts/build-map-style.ts"
   },
   "dependencies": {
     "@turf/simplify": "^7.4.0",
