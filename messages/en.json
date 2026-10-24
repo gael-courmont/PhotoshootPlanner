@@ -48,7 +48,9 @@
     "goToPhoto": "Go to photo {number}",
     "lightboxDescription": "Full-screen photos. Swipe to browse, swipe down or press Escape to close.",
     "closePhotos": "Close the photos",
-    "openPhoto": "View photo {number} full screen"
+    "openPhoto": "View photo {number} full screen",
+    "backToMap": "Back to the map",
+    "planFromHere": "Plan a photowalk starting here"
   },
   "Language": {
     "en": "English",

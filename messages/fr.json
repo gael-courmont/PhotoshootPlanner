@@ -48,7 +48,9 @@
     "goToPhoto": "Aller à la photo {number}",
     "lightboxDescription": "Photos en plein écran. Balayez pour parcourir, balayez vers le bas ou appuyez sur Échap pour fermer.",
     "closePhotos": "Fermer les photos",
-    "openPhoto": "Voir la photo {number} en plein écran"
+    "openPhoto": "Voir la photo {number} en plein écran",
+    "backToMap": "Retour à la carte",
+    "planFromHere": "Planifier un photowalk à partir d'ici"
   },
   "Language": {
     "en": "English",
